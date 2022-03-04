@@ -1,4 +1,6 @@
 ﻿using System;
+using Compilers_Mini_PL.IO;
+using Compilers_Mini_PL.CompilerScanner;
 
 namespace Compilers_Mini_PL
 {
@@ -6,7 +8,8 @@ namespace Compilers_Mini_PL
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Scanner sc = new Scanner(@"C:\Users\Eemeli\Documents\YLIOPISTO\Compilers\Compilers-Mini-PL\Math.MiniPL");
+            Console.WriteLine(sc);
         }
     }
 }
