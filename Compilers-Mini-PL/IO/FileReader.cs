@@ -8,7 +8,7 @@ namespace Compilers_Mini_PL.IO
 {
     class FileReader
     {
-        private string FileContents;
+        private readonly string FileContents;
         private int CurrentIndex;
 
         public FileReader(string FilePath)
@@ -26,6 +26,11 @@ namespace Compilers_Mini_PL.IO
                 this.CurrentIndex = 0;
             }
             return FileContents[CurrentIndex];
+        }
+
+        public void Reset()
+        {
+            this.CurrentIndex = -1;
         }
 
         public override string ToString()
