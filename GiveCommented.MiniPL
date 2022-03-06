@@ -3,8 +3,10 @@ var n : int;
 read n;
 var v : int := 1;
 var i :/*annoying comment*/ int;
+// commenet here
 for i in 1..n do
-v := v * i; /*a/*nested comment*/a*/
+v := v * i; /*a/*ij comment*/
+/*another //test*/
 end for; // this thing
 print "The result is: ";
 print v;

@@ -7,35 +7,63 @@ using Compilers_Mini_PL.IO;
 
 namespace Compilers_Mini_PL.CompilerScanner
 {
-    class Scanner
+    abstract class Scanner
     {
-        protected FileReader Reader;
-        protected StringBuilder Code;
+        protected StringBuilder Code { get; }
+        protected int CurrentIndex;
+        protected int CurrentSectionLength;
 
-        public Scanner(String FilePath)
+        public Scanner(string FilePath)
         {
-            this.Reader = new FileReader(FilePath);
-            this.Code = new StringBuilder(this.Reader.ToString());
+            this.Code = new StringBuilder(System.IO.File.ReadAllText(FilePath));
+            this.CurrentIndex = 0;
+            this.CurrentSectionLength = 0;
         }
 
-        public Scanner(StringBuilder Code, FileReader Reader)
+        public Scanner(StringBuilder Code)
         {
-            this.Reader = Reader;
-            this.Reader.Reset();
             this.Code = Code;
+            this.CurrentIndex = 0;
+            this.CurrentSectionLength = 0;
         }
 
-        public virtual void ScanFile()
+        public virtual void Run()
         {
-            Scanner commentScanner = new CommentScanner(this.Code, this.Reader);
-            commentScanner.ScanFile();
-
-            // Scan with both scanners
         }
+
 
         public override string ToString()
         {
             return this.Code.ToString();
+        }
+
+        protected void EndAndReplaceCurrentSection(string replacingText, bool removeCurrentChar)
+        {
+            //Console.WriteLine(this + "\n");
+            if (removeCurrentChar)
+            {
+                this.Code.Remove(this.CurrentIndex - this.CurrentSectionLength, this.CurrentSectionLength + 1);
+            } else
+            {
+                this.Code.Remove(this.CurrentIndex - this.CurrentSectionLength, this.CurrentSectionLength);
+            }
+            this.CurrentIndex -= this.CurrentSectionLength;
+            this.CurrentSectionLength = 0;
+        }
+
+        private bool IsAtTheEnd()
+        {
+            return this.CurrentIndex < this.Code.Length;
+        }
+
+        protected void ChangeState(Action<char> stateAction)
+        {
+            this.CurrentIndex++;
+            if (!IsAtTheEnd())
+            {
+                return;
+            }
+            stateAction(this.Code[this.CurrentIndex]);
         }
     }
 }

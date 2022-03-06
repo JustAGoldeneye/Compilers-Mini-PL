@@ -9,56 +9,20 @@ namespace Compilers_Mini_PL.CompilerScanner
 {
     class CommentScanner : Scanner
     {
-        private int CurrentIndex;
 
         public CommentScanner(string FilePath) : base(FilePath)
         {
-            this.CurrentIndex = 0;
         }
         
-        public CommentScanner(StringBuilder Code, FileReader Reader) : base(Code, Reader)
+        public CommentScanner(StringBuilder Code) : base(Code)
+        {
+        }
+
+        public override void Run()
         {
             this.CurrentIndex = 0;
-        }
-
-        public override void ScanFile()
-        {
-            /*int i = 0;
-            while (i < base.Code.Length)
-            {
-                char currentChar = base.Reader.GetNextChar();
-                switch (currentChar)
-                {
-                    case '/':
-                        Console.WriteLine("/");
-                        break;
-
-                    default:
-                        break;
-
-                }
-
-                i++; // make proper increase for every condition OR keep this and make it add extra i for every character removal (save the original StringBuilder) OR change string builder every step to avoid chaging this (necessary in any case?)
-            }*/
-
-            this.CurrentIndex = 0;
-            this.StateStart(base.Code[this.CurrentIndex]);
-        }
-
-        private bool IsAtTheEnd()
-        {
-            return this.CurrentIndex < base.Code.Length;
-        }
-
-        // Impement as its own class?
-        private void ChangeState(Action<char> stateAction)
-        {
-            this.CurrentIndex++;
-            if (!IsAtTheEnd())
-            {
-                return;
-            }
-            stateAction(base.Code[this.CurrentIndex]);
+            this.CurrentSectionLength = 0;
+            this.StateStart(this.Code[this.CurrentIndex]);
         }
 
         private void StateStart(char c)
@@ -66,8 +30,8 @@ namespace Compilers_Mini_PL.CompilerScanner
             switch (c)
             {
                 case '/':
-                    Console.WriteLine("/");
-                    this.ChangeState(this.StateStart);
+                    this.CurrentSectionLength++;
+                    this.ChangeState(this.StateSlash);
                     break;
 
                 default:
@@ -76,11 +40,73 @@ namespace Compilers_Mini_PL.CompilerScanner
             }
         }
 
-        private void State1(char c)
+        private void StateSlash(char c)
         {
+            switch (c)
+            {
+                case '/':
+                    this.CurrentSectionLength++;
+                    this.ChangeState(this.StateInsideLineComment);
+                    break;
 
+                case '*':
+                    this.CurrentSectionLength++;
+                    this.ChangeState(this.StateInsideBlockComment);
+                    break;
+
+                default:
+                    this.CurrentSectionLength = 0;
+                    this.ChangeState(this.StateStart);
+                    break;
+            }
         }
 
-        // just use the count opening commments solutions to advance in the projet
+        private void StateInsideLineComment(char c)
+        {
+            switch (c)
+            {
+                case '\n':
+                    this.EndAndReplaceCurrentSection("", false);
+                    this.ChangeState(this.StateStart);
+                    break;
+
+                default:
+                    this.CurrentSectionLength++;
+                    this.ChangeState(this.StateInsideLineComment);
+                    break;
+            }
+        }
+
+        private void StateInsideBlockComment(char c)
+        {
+            switch (c)
+            {
+                case '*':
+                    this.CurrentSectionLength++;
+                    this.ChangeState(this.StateStarInsideBlockComment);
+                    break;
+
+                default:
+                    this.CurrentSectionLength++;
+                    this.ChangeState(this.StateInsideBlockComment);
+                    break;
+            }
+        }
+
+        private void StateStarInsideBlockComment(char c)
+        {
+            switch (c)
+            {
+                case '/':
+                    this.EndAndReplaceCurrentSection("", true);
+                    this.ChangeState(this.StateStart);
+                    break;
+
+                default:
+                    this.CurrentSectionLength++;
+                    this.ChangeState(this.StateInsideBlockComment);
+                    break;
+            }
+        }
     }
 }

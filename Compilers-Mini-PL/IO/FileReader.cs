@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Compilers_Mini_PL.IO
 {
+    // THIS CLASS IS NOT CURRENTLY IN USE!!! and most likely will never be
     class FileReader
     {
         private readonly string FileContents;

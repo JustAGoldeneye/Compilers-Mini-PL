@@ -8,9 +8,13 @@ namespace Compilers_Mini_PL
     {
         static void Main(string[] args)
         {
-            Scanner sc = new Scanner(@"C:\Users\Eemeli\Documents\YLIOPISTO\Compilers\Compilers-Mini-PL\GiveCommented.MiniPL");
-            sc.ScanFile();
-            //Console.WriteLine(sc);
+            string filePath = @"C:\Users\Eemeli\Documents\YLIOPISTO\Compilers\Compilers-Mini-PL\GiveCommented.MiniPL";
+
+            Scanner commentScanner = new CommentScanner(filePath);
+            //Console.WriteLine(commentScanner);
+            commentScanner.Run();
+            Console.Write("\n");
+            Console.WriteLine(commentScanner);
         }
     }
 }
