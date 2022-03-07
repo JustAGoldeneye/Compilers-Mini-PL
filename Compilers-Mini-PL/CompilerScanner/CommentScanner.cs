@@ -9,17 +9,20 @@ namespace Compilers_Mini_PL.CompilerScanner
 {
     class CommentScanner : Scanner
     {
-
+        private int CurrentBlockCommentsOpen;
         public CommentScanner(string FilePath) : base(FilePath)
         {
+            this.CurrentBlockCommentsOpen = 0;
         }
         
         public CommentScanner(StringBuilder Code) : base(Code)
         {
+            this.CurrentBlockCommentsOpen = 0;
         }
 
         protected override void StateStart(char c)
         {
+            this.CurrentBlockCommentsOpen = 0;
             switch (c)
             {
                 case '/':
@@ -48,6 +51,7 @@ namespace Compilers_Mini_PL.CompilerScanner
                 case '*':
                     this.CurrentSectionLength++;
                     this.CurrentIndex++;
+                    this.CurrentBlockCommentsOpen = 1;
                     this.ChangeState(this.StateInsideBlockComment);
                     break;
 
@@ -65,7 +69,6 @@ namespace Compilers_Mini_PL.CompilerScanner
                 case '\n':
                     this.CurrentSectionLength++;
                     this.EndAndReplaceCurrentSection("", false);
-                    this.CurrentIndex++;
                     this.ChangeState(this.StateStart);
                     break;
 
@@ -87,6 +90,12 @@ namespace Compilers_Mini_PL.CompilerScanner
                     this.ChangeState(this.StateStarInsideBlockComment);
                     break;
 
+                 /*case '/':
+                    this.CurrentSectionLength++;
+                    this.CurrentIndex++;
+                    this.ChangeState(this.StateSlashInsideBlockComment);
+                    break;*/
+
                 default:
                     this.CurrentSectionLength++;
                     this.CurrentIndex++;
@@ -95,12 +104,46 @@ namespace Compilers_Mini_PL.CompilerScanner
             }
         }
 
+        /*private void StateSlashInsideBlockComment(char c)
+        {
+            //Console.WriteLine(this.CurrentBlockCommentsOpen);
+            switch (c)
+            {
+                case '*':
+                    this.CurrentSectionLength++;
+                    this.CurrentIndex++;
+                    this.CurrentBlockCommentsOpen++;
+                    this.ChangeState(this.StateInsideBlockComment);
+                    break;
+
+                default:
+                    this.CurrentSectionLength++;
+                    this.CurrentIndex++;
+                    this.ChangeState(this.StateInsideBlockComment);
+                    break;
+            }
+        }*/
+
         private void StateStarInsideBlockComment(char c)
         {
+            //Console.WriteLine(this.CurrentBlockCommentsOpen);
             switch (c)
             {
                 case '/':
+                    /*this.CurrentSectionLength++;
+                    this.CurrentIndex++;
+                    if (this.CurrentBlockCommentsOpen > 1)
+                    {
+                        this.CurrentBlockCommentsOpen--;
+                        this.ChangeState(this.StateInsideBlockComment);
+                    } else
+                    {
+                        this.CurrentBlockCommentsOpen = 0;
+                        this.EndAndReplaceCurrentSection("", true);
+                        this.ChangeState(this.StateStart);
+                    }*/
                     this.CurrentSectionLength++;
+                    this.CurrentBlockCommentsOpen--;
                     this.EndAndReplaceCurrentSection("", true);
                     this.ChangeState(this.StateStart);
                     break;
