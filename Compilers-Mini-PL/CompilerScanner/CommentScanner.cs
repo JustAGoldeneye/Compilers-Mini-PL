@@ -18,23 +18,18 @@ namespace Compilers_Mini_PL.CompilerScanner
         {
         }
 
-        public override void Run()
-        {
-            this.CurrentIndex = 0;
-            this.CurrentSectionLength = 0;
-            this.StateStart(this.Code[this.CurrentIndex]);
-        }
-
-        private void StateStart(char c)
+        protected override void StateStart(char c)
         {
             switch (c)
             {
                 case '/':
-                    this.CurrentSectionLength++;
+                    this.CurrentSectionLength = 1;
+                    this.CurrentIndex++;
                     this.ChangeState(this.StateSlash);
                     break;
 
                 default:
+                    this.CurrentIndex++;
                     this.ChangeState(this.StateStart);
                     break;
             }
@@ -46,11 +41,13 @@ namespace Compilers_Mini_PL.CompilerScanner
             {
                 case '/':
                     this.CurrentSectionLength++;
+                    this.CurrentIndex++;
                     this.ChangeState(this.StateInsideLineComment);
                     break;
 
                 case '*':
                     this.CurrentSectionLength++;
+                    this.CurrentIndex++;
                     this.ChangeState(this.StateInsideBlockComment);
                     break;
 
@@ -66,12 +63,15 @@ namespace Compilers_Mini_PL.CompilerScanner
             switch (c)
             {
                 case '\n':
+                    this.CurrentSectionLength++;
                     this.EndAndReplaceCurrentSection("", false);
+                    this.CurrentIndex++;
                     this.ChangeState(this.StateStart);
                     break;
 
                 default:
                     this.CurrentSectionLength++;
+                    this.CurrentIndex++;
                     this.ChangeState(this.StateInsideLineComment);
                     break;
             }
@@ -83,11 +83,13 @@ namespace Compilers_Mini_PL.CompilerScanner
             {
                 case '*':
                     this.CurrentSectionLength++;
+                    this.CurrentIndex++;
                     this.ChangeState(this.StateStarInsideBlockComment);
                     break;
 
                 default:
                     this.CurrentSectionLength++;
+                    this.CurrentIndex++;
                     this.ChangeState(this.StateInsideBlockComment);
                     break;
             }
@@ -98,6 +100,7 @@ namespace Compilers_Mini_PL.CompilerScanner
             switch (c)
             {
                 case '/':
+                    this.CurrentSectionLength++;
                     this.EndAndReplaceCurrentSection("", true);
                     this.ChangeState(this.StateStart);
                     break;

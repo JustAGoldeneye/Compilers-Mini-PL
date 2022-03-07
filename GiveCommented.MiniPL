@@ -7,6 +7,9 @@ var i :/*annoying comment*/ int;
 for i in 1..n do
 v := v * i; /*a/*ij comment*/
 /*another //test*/
-end for; // this thing
+end for;// this thing
 print "The result is: ";
 print v;
+var f : bool;
+string ajhs : bool;
+assert(1=2)
