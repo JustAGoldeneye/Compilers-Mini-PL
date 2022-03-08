@@ -2,6 +2,8 @@
 using System.Text;
 using Compilers_Mini_PL.IO;
 using Compilers_Mini_PL.CompilerScanner;
+using Compilers_Mini_PL.CompilerParser;
+
 
 namespace Compilers_Mini_PL
 {
@@ -18,7 +20,7 @@ namespace Compilers_Mini_PL
             Console.Write("\n------\nComment Scanner\n\n");
             Console.WriteLine(commentScanner);
 
-            Scanner RKScanner = new ReservedKeywordScanner(commentScanner.ExportCode());
+            Scanner RKScanner = new KeywordScanner(commentScanner.ExportCode());
             RKScanner.Run();
             Console.Write("\n------\nReserved Keyword Scanner\n\n");
             Console.WriteLine(RKScanner);
@@ -37,6 +39,14 @@ namespace Compilers_Mini_PL
             /*testSB.Remove(23, 1);
             Console.WriteLine("\n+++++\n");
             Console.WriteLine(testSB);*/
+
+            /*TagNameToEnumConverter converter = new TagNameToEnumConverter();
+            Console.WriteLine(converter.Convert("+"));
+            //Console.WriteLine(converter.Convert("apple"));
+            Tag tag1 = new Tag("int", "999", converter);
+            Tag tag2 = new Tag("-", converter);
+            Console.WriteLine(tag1);
+            Console.WriteLine(tag2);*/
         }
     }
 }

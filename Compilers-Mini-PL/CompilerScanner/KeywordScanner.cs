@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Compilers_Mini_PL.CompilerScanner
 {
-    class ReservedKeywordScanner : Scanner
+    class KeywordScanner : Scanner
     {
-        public ReservedKeywordScanner(string FilePath) : base(FilePath)
+        public KeywordScanner(string FilePath) : base(FilePath)
         {
         }
 
-        public ReservedKeywordScanner(StringBuilder Code) : base(Code)
+        public KeywordScanner(StringBuilder Code) : base(Code)
         {
         }
 
@@ -382,7 +382,7 @@ namespace Compilers_Mini_PL.CompilerScanner
                 case '(':
                 case '[':
                     this.CurrentSectionLength++;
-                    this.EndAndReplaceCurrentSection("<var_ident>", false);
+                    this.EndAndReplaceCurrentSection("<ident>", false);
                     this.ChangeState(this.StateStart);
                     break;
 
