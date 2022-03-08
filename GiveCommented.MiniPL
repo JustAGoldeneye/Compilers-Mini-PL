@@ -13,3 +13,4 @@ print v;
 var f : bool;
 string ajhs : bool;
 assert(1=2)
+var v : int := 45771;

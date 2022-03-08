@@ -20,6 +20,7 @@ namespace Compilers_Mini_PL.CompilerScanner
         {
             switch (c)
             {
+                // Used to ignore strings
                 case '"':
                     this.CurrentIndex++;
                     this.ChangeState(this.StateInsideBrackets);
@@ -63,6 +64,18 @@ namespace Compilers_Mini_PL.CompilerScanner
                     this.ChangeState(this.StateStart);
                     break;
 
+                case '(':
+                    this.CurrentSectionLength = 1;
+                    this.EndAndReplaceCurrentSection("<(>", true);
+                    this.ChangeState(this.StateStart);
+                    break;
+
+                case ')':
+                    this.CurrentSectionLength = 1;
+                    this.EndAndReplaceCurrentSection("<)>", true);
+                    this.ChangeState(this.StateStart);
+                    break;
+
                 case ':':
                     this.CurrentSectionLength = 1;
                     this.CurrentIndex++;
@@ -90,14 +103,6 @@ namespace Compilers_Mini_PL.CompilerScanner
             }
         }
 
-        private void HandleOperator(char o)
-        {
-            this.CurrentSectionLength = 1;
-            this.EndAndReplaceCurrentSection("<op,"+o+">", true);
-            this.ChangeState(this.StateStart);
-        }
-
-
         private void StateInsideBrackets(char c)
         {
             switch (c)
@@ -112,6 +117,13 @@ namespace Compilers_Mini_PL.CompilerScanner
                     this.ChangeState(this.StateInsideBrackets);
                     break;
             }
+        }
+
+        private void HandleOperator(char o)
+        {
+            this.CurrentSectionLength = 1;
+            this.EndAndReplaceCurrentSection("<op," + o + ">", true);
+            this.ChangeState(this.StateStart);
         }
 
         private void StateColon(char c)
@@ -275,7 +287,7 @@ namespace Compilers_Mini_PL.CompilerScanner
                 case '(':
                 case '[':
                     this.CurrentSectionLength++;
-                    this.EndAndReplaceCurrentSection("<int>", false);
+                    this.EndAndReplaceCurrentSection("<type,int>", false);
                     this.ChangeState(this.StateStart);
                     break;
 
@@ -370,7 +382,7 @@ namespace Compilers_Mini_PL.CompilerScanner
                 case '(':
                 case '[':
                     this.CurrentSectionLength++;
-                    this.EndAndReplaceCurrentSection("<var>", false);
+                    this.EndAndReplaceCurrentSection("<var_ident>", false);
                     this.ChangeState(this.StateStart);
                     break;
 
@@ -628,7 +640,7 @@ namespace Compilers_Mini_PL.CompilerScanner
                 case '(':
                 case '[':
                     this.CurrentSectionLength++;
-                    this.EndAndReplaceCurrentSection("<bool>", false);
+                    this.EndAndReplaceCurrentSection("<type,bool>", false);
                     this.ChangeState(this.StateStart);
                     break;
 
@@ -825,7 +837,7 @@ namespace Compilers_Mini_PL.CompilerScanner
                 case '(':
                 case '[':
                     this.CurrentSectionLength++;
-                    this.EndAndReplaceCurrentSection("<string>", false);
+                    this.EndAndReplaceCurrentSection("<type,string>", false);
                     this.ChangeState(this.StateStart);
                     break;
 
