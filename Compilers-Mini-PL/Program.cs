@@ -44,6 +44,49 @@ namespace Compilers_Mini_PL
                 Console.WriteLine(TTOconverter.GetTags()[i]);
             }
 
+            CFGReader CFGR = new CFGReader(TNEConverter);
+            Console.Write("\n------\nCFG Inporter\n\n");
+            CFGR.Read();
+            for (int i = 0; i < CFGR.GetCFG().Length; i++)
+            {
+                Console.Write("\n");
+                for (int j = 0; j < CFGR.GetCFG()[i].Count; j++)
+                {
+                    Console.Write(CFGR.GetCFG()[i][j] + " ");
+                }
+            }
+            Console.Write("------\n");
+            for (int i = 0; i < CFGR.GetFirstSets().Length; i++)
+            {
+                Console.Write("\n");
+                for (int j = 0; j < CFGR.GetFirstSets()[i].Count; j++)
+                {
+                    Console.Write(CFGR.GetFirstSets()[i][j] + " ");
+                }
+            }
+            Console.Write("\n------\n");
+            for (int i = 0; i < CFGR.GetFollowSets().Length; i++)
+            {
+                Console.Write("\n");
+                for (int j = 0; j < CFGR.GetFollowSets()[i].Count; j++)
+                {
+                    Console.Write(CFGR.GetFollowSets()[i][j] + " ");
+                }
+            }
+
+            CFG c = new CFG(CFGR);
+            Console.Write("\n------\nCFG Constructor\n\n");
+            c.Construct();
+            TagType[] ttKeys = c.GetNonTerminals();
+            for (int i = 0; i < ttKeys.Length; i++)
+            {
+                Console.Write("\n" + ttKeys[i] + "\n");
+                for (int j = 0; j < c.GetParseRule(ttKeys[i]).Length; j++)
+                {
+                    Console.Write(c.GetParseRule(ttKeys[i])[j] + " ");
+                }
+            }
+
             /*StringBuilder testSB = new StringBuilder(System.IO.File.ReadAllText(filePath));
             //Console.WriteLine(testSB);
             for (int i = 0; i < testSB.Length; i++)

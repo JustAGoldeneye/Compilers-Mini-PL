@@ -34,16 +34,24 @@ namespace Compilers_Mini_PL.CompilerParser
         DOT,
         DOUBLEDOT,
         ASSIGNEMNT,
-        PROG,
+        //PROG, // use stmts instead
         STMTS,
+        STMTSX,
         STMT,
+        STMTX,
         EXPR,
+        EXPRX,
         OPND,
         OP,
         UNARYOPEND,
         TYPE,
         VARIDENT,
-        IDENT,
-        RESERVEDKEYWORD
+        //IDENT, // use varindent instead
+        RESERVEDKEYWORD,
+        CFGPRIORITYSTART,
+        CFGPRIORITYEND,
+        CFGOR,
+        CFGLINEEND,
+        CFGEMPTY
     }
 }

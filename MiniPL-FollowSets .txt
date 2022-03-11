@@ -1,0 +1,7 @@
+stmts, $, end, for,
+stmts', $, end, for,
+stmt, ;, var, var_ident, for, read, print, assert, $, end,
+stmt', ;, var, var_ident, for, read, print, assert, $, end,
+expr, .., do, end, var, var_ident, for, read, print, assert, int, string, (, unary_opnd, ), ;, $,
+expr', .., do, end, var, var_ident, for, read, print, assert, int, string, (, unary_opnd, ), ;, $,
+opnd, op, .., do, end, var, var_ident, for, read, print, assert, int, string, (, unary_opnd, ), ;, $,

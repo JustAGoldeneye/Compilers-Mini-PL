@@ -1,0 +1,30 @@
+<stmts> ::= <stmt> ";" <stmts'> ;
+
+<stmts'> ::= - | ( <stmts> ) ;
+
+<stmt> ::= "var" <var_ident> ":" <type> <stmt'>
+| <var_ident> ":=" <expr>
+| "for" <var_ident> "in" <expr> ".." <expr> "do" <stmts> "end" "for"
+| "read" <var_ident>
+| "print" <expr>
+| "assert" "(" <expr> ")" ;
+
+<stmt'> ::= - | ":=" <expr> ;
+
+<expr> ::= <opnd> <expr'>
+| <unary_opnd> <opnd> ;
+
+<expr'> ::= - | <op> <opnd> ;
+
+<opnd> ::= <int>
+| <string>
+| <var_ident>
+| "(" <expr> ")" ;
+
+<type> ::= "int" | "string" | "bool" ;
+
+<reserved_keyword> ::=
+"var" | "for" | "end" | "in" | "do" | "read" | "print" | "int" | "string" | "bool" | "assert" ;
+
+<op> ::=
+"+" | "-" | "*" | "/" | "<" | "=" | "&" | "!" ;

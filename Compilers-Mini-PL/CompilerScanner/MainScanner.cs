@@ -136,7 +136,7 @@ namespace Compilers_Mini_PL.CompilerScanner
                 case '\n':
                 case '<':
                     this.CurrentSectionLength++;
-                    string tag = "<var," + this.Code.ToString()
+                    string tag = "<var_ident," + this.Code.ToString()
                         .Substring(this.CurrentIndex - this.CurrentSectionLength + 1, this.CurrentSectionLength - 1) + ">";
                     this.EndAndReplaceCurrentSection(tag, false);
                     this.ChangeState(this.StateStart);

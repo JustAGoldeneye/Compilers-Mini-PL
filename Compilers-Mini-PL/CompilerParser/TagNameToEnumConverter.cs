@@ -38,17 +38,25 @@ namespace Compilers_Mini_PL.CompilerParser
             this.TagsToEnums.Add(".", TagType.DOT);
             this.TagsToEnums.Add("..", TagType.DOUBLEDOT);
             this.TagsToEnums.Add(":=", TagType.ASSIGNEMNT);
-            this.TagsToEnums.Add("prog", TagType.PROG);
+            //this.TagsToEnums.Add("prog", TagType.PROG);
             this.TagsToEnums.Add("stmts", TagType.STMTS);
-            this.TagsToEnums.Add("stmt", TagType.STMTS);
+            this.TagsToEnums.Add("stmts'", TagType.STMTSX);
+            this.TagsToEnums.Add("stmt", TagType.STMT);
+            this.TagsToEnums.Add("stmt'", TagType.STMTX);
             this.TagsToEnums.Add("expr", TagType.EXPR);
+            this.TagsToEnums.Add("expr'", TagType.EXPRX);
             this.TagsToEnums.Add("opnd", TagType.OPND);
             this.TagsToEnums.Add("op", TagType.OP);
             this.TagsToEnums.Add("unary_opnd", TagType.UNARYOPEND);
             this.TagsToEnums.Add("type", TagType.TYPE);
             this.TagsToEnums.Add("var_ident", TagType.VARIDENT);
-            this.TagsToEnums.Add("ident", TagType.IDENT);
+            //this.TagsToEnums.Add("ident", TagType.IDENT);
             this.TagsToEnums.Add("reserved_keyword", TagType.RESERVEDKEYWORD);
+            //this.TagsToEnums.Add("cfg_(", TagType.CFGPRIORITYSTART);
+            //this.TagsToEnums.Add("cfg_)", TagType.CFGPRIORITYEND);
+            //this.TagsToEnums.Add("cfg_|", TagType.CFGOR);
+            //this.TagsToEnums.Add("cfg_$", TagType.CFGLINEEND);
+            //this.TagsToEnums.Add("cfg__", TagType.CFGEMPTY);
         }
 
         public TagType Convert(string name)

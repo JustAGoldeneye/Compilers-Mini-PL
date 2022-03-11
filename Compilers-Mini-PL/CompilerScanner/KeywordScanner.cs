@@ -382,7 +382,7 @@ namespace Compilers_Mini_PL.CompilerScanner
                 case '(':
                 case '[':
                     this.CurrentSectionLength++;
-                    this.EndAndReplaceCurrentSection("<ident>", false);
+                    this.EndAndReplaceCurrentSection("<var>", false);
                     this.ChangeState(this.StateStart);
                     break;
 
