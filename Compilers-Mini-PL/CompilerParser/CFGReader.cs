@@ -63,6 +63,10 @@ namespace Compilers_Mini_PL.CompilerParser
                     {
                         groupIndex++;
                     }
+                    else if (text[i].Equals('_'))
+                    {
+                        this.CFG[groupIndex].Add(TagType.CFGEMPTY);
+                    }
                     else if (text[i].Equals('|'))
                     {
                         this.CFG[groupIndex].Add(TagType.CFGOR);

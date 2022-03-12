@@ -77,15 +77,25 @@ namespace Compilers_Mini_PL
             CFG c = new CFG(CFGR);
             Console.Write("\n------\nCFG Constructor\n\n");
             c.Construct();
-            TagType[] ttKeys = c.GetNonTerminals();
+            TagType[] ttKeys = c.GetParents();
             for (int i = 0; i < ttKeys.Length; i++)
             {
                 Console.Write("\n" + ttKeys[i] + "\n");
-                for (int j = 0; j < c.GetParseRule(ttKeys[i]).Length; j++)
+                for (int j = 0; j < c.GetParseRulesFor(ttKeys[i]).Length; j++)
                 {
-                    Console.Write(c.GetParseRule(ttKeys[i])[j] + " ");
+                    Console.Write(c.GetParseRulesFor(ttKeys[i])[j] + " ");
                 }
             }
+            Console.WriteLine("\nExtra tests:");
+            for (int i = 0; i < c.GetParseRulesFor(TagType.STMT).Length; i++)
+            {
+                Console.Write(c.GetParseRulesFor(TagType.STMT)[i] + " ");
+            }
+
+            ParseTable parseTable = new ParseTable(c);
+            Console.Write("\n------\nParse Table\n\n");
+            parseTable.ConstructSeparateParseRules();
+            parseTable.PrintParseTable();
 
             /*StringBuilder testSB = new StringBuilder(System.IO.File.ReadAllText(filePath));
             //Console.WriteLine(testSB);

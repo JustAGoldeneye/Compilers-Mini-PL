@@ -1,6 +1,6 @@
 <stmts> ::= <stmt> ";" <stmts'> ;
 
-<stmts'> ::= - | ( <stmts> ) ;
+<stmts'> ::= _ | ( <stmts> ) ;
 
 <stmt> ::= "var" <var_ident> ":" <type> <stmt'>
 | <var_ident> ":=" <expr>
@@ -9,12 +9,12 @@
 | "print" <expr>
 | "assert" "(" <expr> ")" ;
 
-<stmt'> ::= - | ":=" <expr> ;
+<stmt'> ::= _ | ":=" <expr> ;
 
 <expr> ::= <opnd> <expr'>
 | <unary_opnd> <opnd> ;
 
-<expr'> ::= - | <op> <opnd> ;
+<expr'> ::= _ | <op> <opnd> ;
 
 <opnd> ::= <int>
 | <string>
