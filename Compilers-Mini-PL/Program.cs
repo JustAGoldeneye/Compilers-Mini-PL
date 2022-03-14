@@ -13,7 +13,13 @@ namespace Compilers_Mini_PL
         {
             //Scanner
 
-            string filePath = @"C:\Users\Eemeli\Documents\YLIOPISTO\Compilers\Compilers-Mini-PL\GiveCommented.MiniPL";
+            Console.WriteLine("File location:");
+            string filePath = Console.ReadLine();
+            if (filePath.Equals("test"))
+            {
+                filePath = @"C:\Users\Eemeli\Documents\YLIOPISTO\Compilers\Compilers-Mini-PL\GiveCommented.MiniPL";
+            }
+            Console.Write("\n");
 
             Scanner commentScanner = new CommentScanner(filePath);
             Console.Write("------\nOriginal\n\n");
